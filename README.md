@@ -135,7 +135,7 @@ plt.show()
 
 This function is our measure for checking how well our predictions are. The aim in the regression is to get a function that gets predictions as close as possible to the targets. Cost function measures the **Mean Squared Errors** or 
 
-$$J(w,b) = \frac{1}{2m} \sum_{i=1}^m (\hat{y}^{(i)} - y^{(i)})^2$$
+$$J(w,b) = \frac{1}{2m} \sum_{i=1}^m (\hat{y}^{(i)} - y^{(i)})^2 = \frac{1}{2m} \sum_{i=1}^m (f_{w,b}(x^{(i)}) - y^{(i)})^2$$
 
 Where parameters, w and b in the case of the linear regression example, can be adjusted to improve the model. So the goal is to minimize the function $J(w,b)$. Simplified model can use a $b=0$ to only play with $w$.
 
