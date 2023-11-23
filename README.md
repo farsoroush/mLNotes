@@ -45,3 +45,90 @@ One main difference between the two, classification vs regression, is the outcom
   - `(x,y)` single training example
   - `m` number of training examples
   - $`(x^{(i)},y^{(i)})`$ shows the $i^{th}$ training example
+
+Traditionally the training set would be introduced to a learning algorithm and the outcome would be a **hypothesis** $*f*$, which will be called **function** or **the model** from now on. The function will take $`x`$ as input and put out **prediction or estimate** $`\hat{y}`$. So, be aware of the distinction:
+
+- $y$ is the true target
+- $`\hat{y}`$ is the estimate or the prediction of the model.
+
+The proper representation, mathematically, will be:
+```math
+f_{w,b} = w x + b            
+```
+where w and b are generate by the model. Same concept can be expanded to the non-linear equations to create **non linear regression model**.
+
+> The lab note uses the codes below:
+  <details>
+      <summary>The snippets of python code used</summary>
+      
+    ```python
+    import numpy as np
+    import matplotlib.pyplot as plt
+    plt.style.use('./deelplearning.mplstyle')
+    
+    #x_train is the input variable (size in 1000 square feet)
+    #y_train is the target variable (price in 1000s of dollars)
+    x_train = np.array([1.0,2.0])
+    y_train = np.array([300.0,500.0])
+    print(f"x_train = {x_train}")
+    print(f"y_train = {y_train}")
+    #m is the number of training examples:
+    print(f"x_train.shape: {x_train.shape}")
+    m=x_train.shape[0]
+    print(f"Number of training example is: {m}")
+    
+    #Plot the data points
+    plt.scatter(x_train, y_train, marker='x', c='r')   # showing the data points using red crosses
+    #Set the title
+    plt.title("Housing Prices")
+    #Set the y-axis label
+    plt.ylabel('Price (in 1000s of dollars)')
+    #Set the x-axis label
+    plt.xlabel('Size (1000 sqft)')
+    plt.show()
+    
+    #modeling
+    w = 100
+    b = 100
+    print(f"w: {w}")
+    print(f"b: {b}")
+    
+    def compute_model_output(x, w, b):
+        """
+        Computes the prediction of a linear model
+        Args:
+          x (ndarray (m,)): Data, m examples 
+          w,b (scalar)    : model parameters  
+        Returns
+          f_wb (ndarray (m,)): model prediction
+        """
+        m = x.shape[0]
+        f_wb = np.zeros(m)
+        for i in range(m):
+            f_wb[i] = w * x[i] + b
+            
+        return f_wb
+    
+    #now lets compute the model output function:
+    tmp_f_wb = compute_model_output(x_train, w, b,)
+    
+    # Plot our model prediction
+    plt.plot(x_train, tmp_f_wb, c='b',label='Our Prediction')
+    
+    # Plot the data points
+    plt.scatter(x_train, y_train, marker='x', c='r',label='Actual Values')
+    
+    # Set the title
+    plt.title("Housing Prices")
+    # Set the y-axis label
+    plt.ylabel('Price (in 1000s of dollars)')
+    # Set the x-axis label
+    plt.xlabel('Size (1000 sqft)')
+    plt.legend()
+    plt.show()
+    ```
+    </details>
+
+
+### Cost Function
+
