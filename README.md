@@ -163,4 +163,23 @@ $` w = temp-w `$
 
 $` b = temp-b `$
 
+> Note that **Batch** gradient descent refers to the case that user uses all the datasets to minimize the cost function. 
+
+### Multiple Linear Regression:
+
+In the case of the linear regression we only had one parameter/feature, which is far from reality. A more practical case is when you have multiple features, i.e. $x_1, x_2, x_3, x_4, ..., x_n$. Example for the house pricing could be sqft, # of bdrm, # of bathrm, Building age, and target would be the price. $n$ will be used as the indicator of the number of features. $\overrightarrow{x^{(i)}}$ shows the vector of features and it would be equal to $\overrightarrow{x^{(i)}} = (x_1, x_2, x_3, x_4, ..., x_n)$. 
+
+In this case the regression model becomes:
+```math
+\overrightarrow{x^{(i)}} = [w_1  w_2  \cdots w_n] \times [x_1 \\\ x_2 \\\ x_3 \\\ x_4, ..., x_n]^T + b
+```
+
+The vecotization format in python using the `numpy` package would be: `f = np.dot(w,x)+b`. without vecortization it would be:
+```python
+for j in range (0,n):
+  f = f + w[j] * x[j]
+```
+> Note that vectorized format, using the numpy `np.dot` will perform faster since it multiplies the vector elements in parallel.
+
+
 
