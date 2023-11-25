@@ -181,5 +181,5 @@ for j in range (0,n):
 ```
 > Note that vectorized format, using the numpy `np.dot` will perform faster since it multiplies the vector elements in parallel.
 
-
+At this point the cost function and minimization of it would be changed, or expanded, to adopt the fact that w, b, and x are all now vectors or matrices. The rest of the concepts for the gradient decend would be the same. 
 
