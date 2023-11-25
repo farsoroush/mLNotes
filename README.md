@@ -139,3 +139,28 @@ $$J(w,b) = \frac{1}{2m} \sum_{i=1}^m (\hat{y}^{(i)} - y^{(i)})^2 = \frac{1}{2m} 
 
 Where parameters, w and b in the case of the linear regression example, can be adjusted to improve the model. So the goal is to minimize the function $J(w,b)$. Simplified model can use a $b=0$ to only play with $w$.
 
+So, the goal is to minimize the cost function. One of the proposed solutions is the **Gradient Descent** and it can be used to minimize any function. 
+
+For example, when we have a cost function $`J(w_1, w_2, w_3, w_4, ..., w_n, b)`$ and the aim is to find $min_{w_1, w_2, w_3, w_4, ..., w_n, b} J(w_1, w_2, w_3, w_4, ..., b)$. The initial guess can be $w=0 \text{  and   } b=0$. and then we keep chaning w and b to reduce the final value for J. 
+
+> Note that the minimum can be unique or non-unique - i.e. local minimum - depending on the complexity of regression function and J.
+
+Here is the actual equation for the mimization:
+
+$`w = w - \alpha \frac{\partial}{\partial w} J(w,b) \text{          Note that the new value of w is replaced by the new calculation on the RHS of the Eqn.} `$
+
+$` b = b - \alpha \frac{\partial}{\partial b} J(w,b) `$
+
+$\alpha$ is defined to be the **learning rate** or how fast/slow the algorithm would take its steps. The derivative term decides in which direction we are taking steps of $\alpha$.
+
+We take these steps until the **algorithm converges**. It is importan to SIMULTANEOUSLY update w and b. So, the correct implementation would be:
+
+$` temp-w = w - \alpha \frac{\partial}{\partial w} J(w,b) `$
+
+$` temp-b = b - \alpha \frac{\partial}{\partial b} J(w,b) \text{      where the old value of w is used in the  calculation.} `$
+
+$` w = temp-w `$
+
+$` b = temp-b `$
+
+
