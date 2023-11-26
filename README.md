@@ -214,3 +214,6 @@ scale(X_orig, axis=0, with_mean=True, with_std=True, copy=True)
 2. Make sure the learning rate, $\alpha$, is selected properly. One example could be when J is jumping up and down as iterations progress. 
 3. With small enough learning rate, J must be decreasing. If not, it means most probable there is a mistake in the written code.
 4. One could use a small learning rate of 0.0001 and then $\times 3$ to get larger and observe the iterations and J progression. 
+
+### Feature Engineering and Polynomial Regression
+There are cases where multiple features could be combined into one new feature, such as the case where you have width and height of a lot as two features. In the case of the example given, one could multiply the two features and come up with a new feature, aka area. Such actions would result in the creation of polynomial expressions for the regression and would mean a more complex model to handle. The previous concept for J still applies, only require more algebraic works. 
