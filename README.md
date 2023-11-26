@@ -183,3 +183,22 @@ for j in range (0,n):
 
 At this point the cost function and minimization of it would be changed, or expanded, to adopt the fact that w, b, and x are all now vectors or matrices. The rest of the concepts for the gradient decend would be the same. 
 
+### Feature Scaling:
+The main goal of this part is to find a way to run the gradient descent faster when we are dealing with multiple linear regression. In the example of the house price, imagine the impact of parameter for the size of the house  vs the parameter for the number of bedrooms, two features are considerable different in value range and as such their parameters are vastly different. The reflection on the J contour plots would be long concentric oval shapes showing which one of the parameters will change more drastically. in this case, the gradient descent formula will bounce quite a few rounds before full convergence. The solution to this problem is to **re-scale** the data so the features will have similar variations and J contour plots will be more like concentric circles. The other solution is to perform **mean normalization**, that is, finding the average of each feature, suppose $\mu_i$, and recalculate each feature based off of the following equation:
+```math
+x_{i,new} = \frac{x_i - \mu_i}{x_{i,max} - x_{i, min}}
+```
+The outcome of this method is features realignment in a $[-1,1]$ range.
+
+The other solution is **Z-score normalization** where one would use the mean and standard deviation of the data and uses the following for normalization:
+```math
+x_{i,new} = \frac{x_i - \mu_i}{\sigma_i}
+```
+The outcome this time would be a normalzied in a symmetrical range of $[-a,a]$, where a is any given number. This would be the ideal case, where minor deviations are acceptable too. 
+
+#### Practical Tips:
+
+1. Make sure the learning curve is working properly, that is, J is decreasing constantly and make sure there is a convergence test to stop where the decrease is not significant anymore.
+2. Make sure the learning rate, $\alpha$, is selected properly. One example could be when J is jumping up and down as iterations progress. 
+3. With small enough learning rate, J must be decreasing. If not, it means most probable there is a mistake in the written code.
+4. One could use a small learning rate of 0.0001 and then $\times 3$ to get larger and observe the iterations and J progression. 
