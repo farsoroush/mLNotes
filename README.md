@@ -217,3 +217,56 @@ scale(X_orig, axis=0, with_mean=True, with_std=True, copy=True)
 
 ### Feature Engineering and Polynomial Regression
 There are cases where multiple features could be combined into one new feature, such as the case where you have width and height of a lot as two features. In the case of the example given, one could multiply the two features and come up with a new feature, aka area. Such actions would result in the creation of polynomial expressions for the regression and would mean a more complex model to handle. The previous concept for J still applies, only require more algebraic works. 
+
+### SciKit practical code lines:
+ScikitLearn (SKL) has a gradient descent regression model which works the best on the normalized data. User can use the SKL built-in scaler, StandardScaler(), which uses z-score normalization. Below is the code snippet example:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import SGDRegressor
+from sklearn.preprocessing import StandardScaler
+# Import data (below is from a previously ran example):
+X_train, y_train = load_house_data()
+X_features = ['size(sqft)','bedrooms','floors','age']
+
+#Using Scaler:
+scaler = StandardScaler()
+X_norm = scaler.fit_transform(X_train)
+
+#Using Regression Model:
+sgdr = SGDRegressor(max_iter=1000)
+sgdr.fit(X_norm, y_train)
+print(sgdr)
+print(f"number of iterations completed: {sgdr.n_iter_}, number of weight updates: {sgdr.t_}")
+```
+
+The outcome looks like:
+
+```
+SGDRegressor(alpha=0.0001, average=False, early_stopping=False, epsilon=0.1,
+             eta0=0.01, fit_intercept=True, l1_ratio=0.15,
+             learning_rate='invscaling', loss='squared_loss', max_iter=1000,
+             n_iter_no_change=5, penalty='l2', power_t=0.25, random_state=None,
+             shuffle=True, tol=0.001, validation_fraction=0.1, verbose=0,
+             warm_start=False)
+number of iterations completed: 138, number of weight updates: 13663.0
+```
+Viewing the parameters:
+```python
+b_norm = sgdr.intercept_
+w_norm = sgdr.coef_
+print(f"model parameters:                   w: {w_norm}, b:{b_norm}")
+```
+
+Using the model and predict:
+```python
+# make a prediction using sgdr.predict()
+y_pred_sgd = sgdr.predict(X_norm)
+# make a prediction using w,b. 
+y_pred = np.dot(X_norm, w_norm) + b_norm  
+print(f"prediction using np.dot() and sgdr.predict match: {(y_pred == y_pred_sgd).all()}")
+
+print(f"Prediction on training set:\n{y_pred[:4]}" )
+print(f"Target values \n{y_train[:4]}")
+```
