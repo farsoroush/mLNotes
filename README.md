@@ -196,6 +196,18 @@ x_{i,new} = \frac{x_i - \mu_i}{\sigma_i}
 ```
 The outcome this time would be a normalzied in a symmetrical range of $[-a,a]$, where a is any given number. This would be the ideal case, where minor deviations are acceptable too. 
 
+The last one can happen in python using the code belwo from `sklearn` library:
+
+```python
+from sklearn.preprocessing import scale
+scale(X_orig, axis=0, with_mean=True, with_std=True, copy=True)
+```
+
+> Note: One could check the range of each feature using the following line of code in pythong:
+> ```python
+> np.ptp("Dataset", axis=0)
+> ```
+
 #### Practical Tips:
 
 1. Make sure the learning curve is working properly, that is, J is decreasing constantly and make sure there is a convergence test to stop where the decrease is not significant anymore.
