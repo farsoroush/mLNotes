@@ -4,7 +4,7 @@
 The notes here are personal notes on various machine learning courses (ML courses) and can be used by others. If you find any mistakes in understanding or in writing (or in any of the content) please feel free to comment or contact me via serpoush [at] gmail. 
 
 ## Course 1: Machine Learning Fundamentals by Andrew Ng
-### Week 1 Section 1 
+### Week 1
 The basic definition of ML can come from Arthur Samuel in 1959: "Field of study that gives computers the ability to learn without being explicitly programmed."
 The first event was Sameul's program to predict the outcome of the checkers game. 
 The definition is more of an informal one. 
@@ -130,8 +130,8 @@ plt.show()
 ```   
   </details>
 
-
-### Cost Function
+### Week 2
+#### Cost Function
 
 This function is our measure for checking how well our predictions are. The aim in the regression is to get a function that gets predictions as close as possible to the targets. Cost function measures the **Mean Squared Errors** or 
 
@@ -270,3 +270,24 @@ print(f"prediction using np.dot() and sgdr.predict match: {(y_pred == y_pred_sgd
 print(f"Prediction on training set:\n{y_pred[:4]}" )
 print(f"Target values \n{y_train[:4]}")
 ```
+
+
+### Week 3
+#### Classification:
+The output variable $\hat{y}$ here will have discrete values as opposed to regression where the output $\hat{y}$ had a continuous value. 
+
+Typical examples of this problem could be:
+
+|Question|Answer "yes or no"|
+| :----------- | :-----------: |
+|Is this email **spam**?|yes or no|
+|Is the transaction **fraudulent**?|yes or no|
+|Is the tumor **malignant**?|yes or no|
+
+The above examples are known as **binary** classification as the output only can be one of the two values listed. As such, we could replace the yes/no terms with True/False or 1/0 instead. When 0 and 1 used, one could call them negative and positive class and it must be noted that it does not mean "bad" vs "good" necessary. This is just to categorize/distinguish them.   
+
+> Note: The terms **Class** and **Category** may be used interchangably.
+
+> Note 2: One could say that the classification problem can be modeled using linear regression where a function of $f_{w,b} (x) = wx+b$ predicts the outcome. Then a **decision boundary** is designated and assign $f_{w,b} (x)<0.5  ==> \hat{y} = 0$ and $f_{w,b} (x)>0.5  ==> \hat{y} = 1$. $0.5$ can be called the threshold. Note that additional data points, suppose another malignant point with high $x$ value, will change $(w,b)$ such that the new decision boundary is moved; with the new boundary some of the previously "malignant/yes" cases are now "benign/no."
+
+**Logistic Regression** is what can be used instead of the linear regression models. 
