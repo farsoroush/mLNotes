@@ -305,4 +305,27 @@ z = \overrightarrow{w} \cdot \overrightarrow{x} + b
 f_{\overrightarrow{w},b} (\overrightarrow{x}) = g(\overrightarrow{w} \cdot \overrightarrow{x} + b) = \frac {1} {1+e^{-\overrightarrow{w} \cdot \overrightarrow{x} + b}}
 ```
 
-The outcome of the logistic regression is a *probability* of the expectation. So, the outcome of 0.7 means that $\hat{y}$ has a 70% chance of being 1 and 30% chance of being 0. 
+The outcome of the logistic regression is a *probability* of the expectation. So, the outcome of 0.7 means that $\hat{y}$ has a 70% chance of being 1 and 30% chance of being 0; or written mathematically: $= P(y=1 | x;\overrightarrow{w},b)$ which is read the probability of y=1 for x given values of w and b. 
+
+Here is how the Sigmoid function is created in python:
+
+```python
+def sigmoid(z):
+    """
+    Compute the sigmoid of z
+
+    Args:
+        z (ndarray): A scalar, numpy array of any size.
+
+    Returns:
+        g (ndarray): sigmoid(z), with the same shape as z
+         
+    """
+
+    g = 1/(1+np.exp(-z))
+   
+    return g
+```
+
+##### Decision boundary:
+Ultimately we need to define a threshold where the model returns 1 or 0, instead of a probability. 
