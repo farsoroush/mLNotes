@@ -291,3 +291,18 @@ The above examples are known as **binary** classification as the output only can
 > Note 2: One could say that the classification problem can be modeled using linear regression where a function of $f_{w,b} (x) = wx+b$ predicts the outcome. Then a **decision boundary** is designated and assign $f_{w,b} (x)<0.5  ==> \hat{y} = 0$ and $f_{w,b} (x)>0.5  ==> \hat{y} = 1$. $0.5$ can be called the threshold. Note that additional data points, suppose another malignant point with high $x$ value, will change $(w,b)$ such that the new decision boundary is moved; with the new boundary some of the previously "malignant/yes" cases are now "benign/no."
 
 **Logistic Regression** is what can be used instead of the linear regression models. 
+
+#### Logistic Regression:
+This regression fits a "S" shaped curve, aka **Sigmoid Function**, to the data. The upper range for the function is 1 and the lower range is 0 with the following function:
+
+```math
+g(z) = \frac {1} {1+e^{-z}}
+
+\text{ to apply this function and create a logistic regression:}
+z = \overrightarrow{w} \cdot \overrightarrow{x} + b
+
+\text{ \ So:}
+f_{\overrightarrow{w},b} (\overrightarrow{x}) = g(\overrightarrow{w} \cdot \overrightarrow{x} + b) = \frac {1} {1+e^{-\overrightarrow{w} \cdot \overrightarrow{x} + b}}
+```
+
+The outcome of the logistic regression is a *probability* of the expectation. So, the outcome of 0.7 means that $\hat{y}$ has a 70% chance of being 1 and 30% chance of being 0. 
