@@ -343,12 +343,11 @@ where
     $loss(f_{\mathbf{w},b}(\mathbf{x}^{(i)}), y^{(i)}) = -y^{(i)} \log\left(f_{\mathbf{w},b}\left( \mathbf{x}^{(i)} \right) \right) - \left( 1 - y^{(i)}\right) \log \left( 1 - f_{\mathbf{w},b}\left( \mathbf{x}^{(i)} \right) \right) \tag{2}$
     
 *  where m is the number of training examples in the data set and:
+
 ```math
-\begin{align}
-  f_{\mathbf{w},b}(\mathbf{x^{(i)}}) &= g(z^{(i)})\tag{3} \\
-  z^{(i)} &= \mathbf{w} \cdot \mathbf{x}^{(i)}+ b\tag{4} \\
-  g(z^{(i)}) &= \frac{1}{1+e^{-z^{(i)}}}\tag{5} 
-\end{align}
+  f_{\mathbf{w},b}(\mathbf{x^{(i)}}) = g(z^{(i)}) \tag{3} 
+  z^{(i)} = \mathbf{w} \cdot \mathbf{x}^{(i)}+ b \tag{4} 
+  g(z^{(i)}) = \frac{1}{1+e^{-z^{(i)}}} \tag{5} 
 ```
 
 And here is a simple function for the cost function in python:
