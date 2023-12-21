@@ -331,21 +331,50 @@ def sigmoid(z):
 Ultimately we need to define a threshold where the model returns 1 or 0, instead of a probability. 
 
 **Simplified Cost function for the logistic regression model:**
+
 ```math
-$$ J(\mathbf{w},b) = \frac{1}{m} \sum_{i=0}^{m-1} \left[ loss(f_{\mathbf{w},b}(\mathbf{x}^{(i)}), y^{(i)}) \right] \tag{1}$$
+J(\mathbf{w},b) = \frac{1}{m} \sum_{i=0}^{m-1} \left[ loss(f_{\mathbf{w},b}(\mathbf{x}^{(i)}), y^{(i)}) \right] \tag{1}
 ```
 
 where
 
 * $loss(f_{\mathbf{w},b}(\mathbf{x}^{(i)}), y^{(i)})$ is the cost for a single data point, which is:
 
-    $$loss(f_{\mathbf{w},b}(\mathbf{x}^{(i)}), y^{(i)}) = -y^{(i)} \log\left(f_{\mathbf{w},b}\left( \mathbf{x}^{(i)} \right) \right) - \left( 1 - y^{(i)}\right) \log \left( 1 - f_{\mathbf{w},b}\left( \mathbf{x}^{(i)} \right) \right) \tag{2}$$
+    $loss(f_{\mathbf{w},b}(\mathbf{x}^{(i)}), y^{(i)}) = -y^{(i)} \log\left(f_{\mathbf{w},b}\left( \mathbf{x}^{(i)} \right) \right) - \left( 1 - y^{(i)}\right) \log \left( 1 - f_{\mathbf{w},b}\left( \mathbf{x}^{(i)} \right) \right) \tag{2}$
     
 *  where m is the number of training examples in the data set and:
-```
+```math
 \begin{align}
   f_{\mathbf{w},b}(\mathbf{x^{(i)}}) &= g(z^{(i)})\tag{3} \\
   z^{(i)} &= \mathbf{w} \cdot \mathbf{x}^{(i)}+ b\tag{4} \\
   g(z^{(i)}) &= \frac{1}{1+e^{-z^{(i)}}}\tag{5} 
 \end{align}
+```
+
+And here is a simple function for the cost function in python:
+
+```python
+def compute_cost_logistic(X, y, w, b):
+    """
+    Computes cost
+
+    Args:
+      X (ndarray (m,n)): Data, m examples with n features
+      y (ndarray (m,)) : target values
+      w (ndarray (n,)) : model parameters  
+      b (scalar)       : model parameter
+      
+    Returns:
+      cost (scalar): cost
+    """
+
+    m = X.shape[0]
+    cost = 0.0
+    for i in range(m):
+        z_i = np.dot(X[i],w) + b
+        f_wb_i = sigmoid(z_i)
+        cost +=  -y[i]*np.log(f_wb_i) - (1-y[i])*np.log(1-f_wb_i)
+             
+    cost = cost / m
+    return cost
 ```
