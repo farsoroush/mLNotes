@@ -329,3 +329,23 @@ def sigmoid(z):
 
 ##### Decision boundary:
 Ultimately we need to define a threshold where the model returns 1 or 0, instead of a probability. 
+
+**Simplified Cost function for the logistic regression model:**
+```math
+$$ J(\mathbf{w},b) = \frac{1}{m} \sum_{i=0}^{m-1} \left[ loss(f_{\mathbf{w},b}(\mathbf{x}^{(i)}), y^{(i)}) \right] \tag{1}$$
+```
+
+where
+
+* $loss(f_{\mathbf{w},b}(\mathbf{x}^{(i)}), y^{(i)})$ is the cost for a single data point, which is:
+
+    $$loss(f_{\mathbf{w},b}(\mathbf{x}^{(i)}), y^{(i)}) = -y^{(i)} \log\left(f_{\mathbf{w},b}\left( \mathbf{x}^{(i)} \right) \right) - \left( 1 - y^{(i)}\right) \log \left( 1 - f_{\mathbf{w},b}\left( \mathbf{x}^{(i)} \right) \right) \tag{2}$$
+    
+*  where m is the number of training examples in the data set and:
+```
+\begin{align}
+  f_{\mathbf{w},b}(\mathbf{x^{(i)}}) &= g(z^{(i)})\tag{3} \\
+  z^{(i)} &= \mathbf{w} \cdot \mathbf{x}^{(i)}+ b\tag{4} \\
+  g(z^{(i)}) &= \frac{1}{1+e^{-z^{(i)}}}\tag{5} 
+\end{align}
+```
