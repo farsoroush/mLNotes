@@ -10,9 +10,114 @@ from lab_coffee_utils import load_coffee_data, plt_roast, plt_prob, plt_layer, p
 import logging
 logging.getLogger("tensorflow").setLevel(logging.ERROR)
 tf.autograph.set_verbosity(0)
+### DataSet
+X,Y = load_coffee_data();
+print(X.shape, Y.shape)
+plt_roast(X,Y) #draws the shapes and plots the acceptable range lines
+
+### Normalize the data
+
+Fitting the weights to the data (back-propagation, covered in next week's lectures) will proceed more quickly if the data is normalized. This is the same procedure you used in Course 1 where features in the data are each normalized to have a similar range. The procedure below uses a Keras normalization layer. It has the following steps:
+
+create a "Normalization Layer". Note, as applied here, this is not a layer in your model.
+'adapt' the data. This learns the mean and variance of the data set and saves the values internally.
+normalize the data.
+It is important to apply normalization to any future data that utilizes the learned model.
 
 
+####
+
+print(f"Temperature Max, Min pre normalization: {np.max(X[:,0]):0.2f}, {np.min(X[:,0]):0.2f}")
+print(f"Duration    Max, Min pre normalization: {np.max(X[:,1]):0.2f}, {np.min(X[:,1]):0.2f}")
+norm_l = tf.keras.layers.Normalization(axis=-1)
+norm_l.adapt(X)  # learns mean, variance
+Xn = norm_l(X)
+print(f"Temperature Max, Min post normalization: {np.max(Xn[:,0]):0.2f}, {np.min(Xn[:,0]):0.2f}")
+print(f"Duration    Max, Min post normalization: {np.max(Xn[:,1]):0.2f}, {np.min(Xn[:,1]):0.2f}")
+Xt = np.tile(Xn,(1000,1))
+Yt= np.tile(Y,(1000,1))   
+print(Xt.shape, Yt.shape)   
+
+### Tensor Flow Model:
+tf.random.set_seed(1234)  # applied to achieve consistent results
+model = Sequential(
+    [
+        tf.keras.Input(shape=(2,)),
+        Dense(3, activation='sigmoid', name = 'layer1'),
+        Dense(1, activation='sigmoid', name = 'layer2')
+     ]
+)
+
+###The tf.keras.Input(shape=(2,)), specifies the expected shape of the input. This allows Tensorflow to size the weights and bias parameters at this point. This is useful when exploring Tensorflow models. This statement can be omitted in practice and Tensorflow will size the network parameters when the input data is specified in the model.fit statement.
+Note 2: Including the sigmoid activation in the final layer is not considered best practice. It would instead be accounted for in the loss which improves numerical stability. This will be described in more detail in a later lab.
+
+### The model.summary() provides a description of the network:
+model.summary()
 
 
+L1_num_params = 2 * 3 + 3   # W1 parameters  + b1 parameters
+L2_num_params = 3 * 1 + 1   # W2 parameters  + b2 parameters
+print("L1 params = ", L1_num_params, ", L2 params = ", L2_num_params  )
+
+### Examining the weights:
+W1, b1 = model.get_layer("layer1").get_weights()
+W2, b2 = model.get_layer("layer2").get_weights()
+print(f"W1{W1.shape}:\n", W1, f"\nb1{b1.shape}:", b1)
+print(f"W2{W2.shape}:\n", W2, f"\nb2{b2.shape}:", b2)
+
+
+### The model.compile statement defines a loss function and specifies a compile optimization.
+### The model.fit statement runs gradient descent and fits the weights to the data.
+
+###
+Epochs and batches
+In the fit statement above, the number of epochs was set to 10. This specifies that the entire data set should be applied during training 10 times. During training, you see output describing the progress of training that looks like this:
+
+Epoch 1/10
+6250/6250 [==============================] - 6s 910us/step - loss: 0.1782
+The first line, Epoch 1/10, describes which epoch the model is currently running. For efficiency, the training data set is broken into 'batches'. The default size of a batch in Tensorflow is 32. There are 200000 examples in our expanded data set or 6250 batches. The notation on the 2nd line 6250/6250 [==== is describing which batch has been executed.
+
+Updated Weights
+After fitting, the weights have been updated:
+####
+
+model.compile(
+    loss = tf.keras.losses.BinaryCrossentropy(),
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.01),
+)
+
+model.fit(
+    Xt,Yt,            
+    epochs=10,
+)
+#### Checking weights agani
+W1, b1 = model.get_layer("layer1").get_weights()
+W2, b2 = model.get_layer("layer2").get_weights()
+print("W1:\n", W1, "\nb1:", b1)
+print("W2:\n", W2, "\nb2:", b2)
+### Prediction:
+X_test = np.array([
+    [200,13.9],  # positive example
+    [200,17]])   # negative example
+X_testn = norm_l(X_test)
+predictions = model.predict(X_testn)
+print("predictions = \n", predictions)
+yhat = np.zeros_like(predictions)
+for i in range(len(predictions)):
+    if predictions[i] >= 0.5:
+        yhat[i] = 1
+    else:
+        yhat[i] = 0
+print(f"decisions = \n{yhat}")
+
+
+yhat = (predictions >= 0.5).astype(int)
+print(f"decisions = \n{yhat}")
+
+### Layer Functions:
+plt_layer(X,Y.reshape(-1,),W1,b1,norm_l)
+
+netf= lambda x : model.predict(norm_l(x))
+plt_network(X,Y,netf)
 
 ```
