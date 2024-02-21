@@ -377,3 +377,31 @@ def compute_cost_logistic(X, y, w, b):
     cost = cost / m
     return cost
 ```
+
+
+## Course 2: Advanced Learning Algorithms by Andrew Ng
+
+### Neural Network Model:
+
+### TensorFlow (TF) Implementation:
+Exmaple discussed is coffee roasting. if X is the input array of temperatures and layer 1 activation function is a^[1], and output or the second layer activation is a^[2], then the code for inference in TF will be:
+``` python
+x = np.array([[200.0,17.0]]) # temp and duration for coffee roasting
+layer_1 = Dense(units=3, activation = 'sigmoid')
+a1 = layer_1(x)
+layer_2 = Dense(units=1, activation = 'sigmoid')
+a2 = layer_2(a1)
+# if we want a threshold value, suppose a2>0, then we can apply the following:
+if a2>=0.5:
+  yhat = 1
+else:
+ yhat = 0
+```
+
+More details can be found in the lab notes. 
+
+### Data in TensorFlow (TF):
+As TF and Numpy were developed in parallel, the data structure is different between the two libraries. We will discuss the differences here. 
+Example 1 is Featuring vectors:
+Suppose you have a 2X3 matrix, 2 rows and 3 columns, so the array would be `np.array([[1,2,3],[4,5,6]])` in numpy. Notice to show a 2D array we are using [[ and ]] showing start and end of the array. So the difference between [[200,17]] and [200,17] is the first one is a 2D array while the second one is a 1D vector.
+TF is designed with the purpose of efficiently processing large datasets. So a 2D vector will show up as a Tensor rather than a matrix. In the code example above, `a2` is a Tensor object in tf and will be shown as `tf.Tensor([[0.8]],shape(1,1), dtype=float32)`. If one convert `a2` using `a2.numpy()` to a numpy object, the ourcome will be `array([[0.8]], dtype = float32)`.
