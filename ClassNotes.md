@@ -405,3 +405,45 @@ As TF and Numpy were developed in parallel, the data structure is different betw
 Example 1 is Featuring vectors:
 Suppose you have a 2X3 matrix, 2 rows and 3 columns, so the array would be `np.array([[1,2,3],[4,5,6]])` in numpy. Notice to show a 2D array we are using [[ and ]] showing start and end of the array. So the difference between [[200,17]] and [200,17] is the first one is a 2D array while the second one is a 1D vector.
 TF is designed with the purpose of efficiently processing large datasets. So a 2D vector will show up as a Tensor rather than a matrix. In the code example above, `a2` is a Tensor object in tf and will be shown as `tf.Tensor([[0.8]],shape(1,1), dtype=float32)`. If one convert `a2` using `a2.numpy()` to a numpy object, the ourcome will be `array([[0.8]], dtype = float32)`.
+
+### Building a Neural Network:
+Earlier we saw how to create a neural net. Here is another way:
+
+```python
+layer_1 = Dense(units = 3, activation "sigmoid")
+layer_2 = Dense(units = 1, activation "sigmoid")
+model = Sequential([layer_1,layer_2]) # This is asking TF to create a neural net from the two layers created sequentially
+```
+
+This can also be achieved using the following line, rather than having explicit assignments:
+
+```python
+model = Sequential([Dense(units = 3, activation "sigmoid"),
+                    Dense(units = 1, activation "sigmoid")])
+model.compile(...)
+```
+
+suppose you have a training set as below:
+
+|     	|    	| y 	|
+|-----	|----	|---	|
+| 200 	| 17 	| 1 	|
+| 120 	| 5  	| 0 	|
+| 425 	| 20 	| 0 	|
+| 212 	| 18 	| 1 	|
+
+in this model, the trainig set will be:
+```python
+x = np.array([[200.0,17.0],
+              [120.0,5.0],
+              [425.0,20.0],
+              [212.0,18.0]])
+ y = np.array([1,0,0,1])
+```
+
+And we can create a model using the lines below:
+```python
+model.compule(...) # sequentially put together the two layers
+model.fit(x,y) #fitting the training
+model.predict(x_new) #carries the inference for you
+```
