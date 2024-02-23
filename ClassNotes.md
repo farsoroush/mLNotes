@@ -455,6 +455,8 @@ Essentially, the algebraic model will be:
 ```python
 X = np.array([200,17]) # which is 200F for 17minutes is the input. 
 ```
+
+The node activations will be calculated using the following template function
 ```math
 a_1^{[1]} = g(\overrightarrow{w}_1^{[1]} \cdot \overrightarrow{x} + b_1^{[1]})
 ```
@@ -484,4 +486,16 @@ w2_1 = np.array([-7,8,9])
 b2_1 = np.array([3])
 z2_1=np.dot(w2_1,x)+b2_1
 a2_1= sigmoid(z2_1)
+```
+Given the following w arrays:
+```math
+\overrightarrow{w}_1^{[1]} = \begin{bmatrix} 1 \\\ 2 \end{bmatrix}   \text{  and  }
+\overrightarrow{w}_2^{[1]} = \begin{bmatrix} -3 \\\ 4 \end{bmatrix}   \text{  and  }
+\overrightarrow{w}_3^{[1]} = \begin{bmatrix} 5 \\\ -6 \end{bmatrix}
+```
+Then the python formatted arrays should be:
+```python
+W = np.array[[1,-3,5],[2,4,-6]] # first row will be the first component of each w and second row is the second component
+
+def dense (a_in,W,b)
 ```
