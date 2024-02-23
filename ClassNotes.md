@@ -491,11 +491,72 @@ Given the following w arrays:
 ```math
 \overrightarrow{w}_1^{[1]} = \begin{bmatrix} 1 \\\ 2 \end{bmatrix}   \text{  and  }
 \overrightarrow{w}_2^{[1]} = \begin{bmatrix} -3 \\\ 4 \end{bmatrix}   \text{  and  }
-\overrightarrow{w}_3^{[1]} = \begin{bmatrix} 5 \\\ -6 \end{bmatrix}
+\overrightarrow{w}_3^{[1]} = \begin{bmatrix} 5 \\\ -6 \end{bmatrix}   \text{  and  }
+   \text{
+and
+  }
+\overrightarrow{a}^{[0]} = \overrightarrow{X}
+
 ```
 Then the python formatted arrays should be:
 ```python
 W = np.array[[1,-3,5],[2,4,-6]] # first row will be the first component of each w and second row is the second component
+b = np.array([-1,1,2])
+a_in = np.array([-2,4])
+
 
 def dense (a_in,W,b)
+    """
+    Computes dense layer
+    Args:
+      a_in (ndarray (n, )) : Data, 1 example 
+      W    (ndarray (n,j)) : Weight matrix, n features per unit, j units
+      b    (ndarray (j, )) : bias vector, j units  
+    Returns
+      a_out (ndarray (j,))  : j units|
+    """
+
+  units = W.shape[1]
+  a_out = np.zeros(units)
+  for j in range(units):
+    w=W[:,j]  #[pulling j th column
+    z = np.dot(w,a_in)+b[j]
+    a_out [j] = g(z)
+  return a_out
+
+def sequential(x):
+  a_1 = dense(x,W1,b1)
+  a_2 = dense(a_1,W2,b2)
+  a_3 = dense(a_2,W3,b3)
+  a_4 = dense(a_3,W4,b4)
+  f_x = a4
+return f_x
+```
+Prediction function will work as follows:
+```python
+def my_predict(X, W1, b1, W2, b2):
+    m = X.shape[0]
+    p = np.zeros((m,1))
+    for i in range(m):
+        p[i,0] = my_sequential(X[i], W1, b1, W2, b2)
+    return(p)
+
+X_tst = np.array([
+    [200,13.9],  # postive example
+    [200,17]])   # negative example
+X_tstn = norm_l(X_tst)  # remember to normalize
+predictions = my_predict(X_tstn, W1_tmp, b1_tmp, W2_tmp, b2_tmp)
+
+yhat = np.zeros_like(predictions)
+for i in range(len(predictions)):
+    if predictions[i] >= 0.5:
+        yhat[i] = 1
+    else:
+        yhat[i] = 0
+print(f"decisions = \n{yhat}")
+
+yhat = (predictions >= 0.5).astype(int)
+print(f"decisions = \n{yhat}")
+
+
 ```
