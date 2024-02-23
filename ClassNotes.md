@@ -447,3 +447,41 @@ model.compule(...) # sequentially put together the two layers
 model.fit(x,y) #fitting the training
 model.predict(x_new) #carries the inference for you
 ```
+
+### Neural Net Implementation in Python:
+
+The idea is to review how the code is written in `Python` using the coffee roasting model with two layers (3 nodes and 1 node). 
+Essentially, the algebraic model will be:
+```python
+X = np.array([200,17]) # which is 200F for 17minutes is the input. 
+```
+```math
+a_1^{[1]} = g(\overrightarrow{w}_1^{[1]} \cdot \overrightarrow{x} + b_1^{[1]})
+```
+```python
+#calculating the first layer first node
+w1_1 = np.array([1,2])
+b1_1 = np.array([-1])
+z1_1=np.dot(w1_1,x)+b1_1
+a1_1= sigmoid(z1_1)
+#calculating the first layer second node
+w1_2 = np.array([-3,4])
+b1_2 = np.array([1])
+z1_2=np.dot(w1_2,x)+b1_2
+a1_2= sigmoid(z1_2)
+#calculating the first layer third node
+w1_3 = np.array([5,-6])
+b1_3 = np.array([2])
+z1_3=np.dot(w1_3,x)+b1_3
+a1_3= sigmoid(z1_3)
+
+#grouping them together:
+a1 = np.array([a1_1,a1_2,a1_3]
+
+
+#calculating the second layer first node
+w2_1 = np.array([-7,8,9])
+b2_1 = np.array([3])
+z2_1=np.dot(w2_1,x)+b2_1
+a2_1= sigmoid(z2_1)
+```
