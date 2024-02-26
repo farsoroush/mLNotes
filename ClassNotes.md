@@ -557,6 +557,17 @@ print(f"decisions = \n{yhat}")
 
 yhat = (predictions >= 0.5).astype(int)
 print(f"decisions = \n{yhat}")
+```
 
-
+### Neural Net Vectorization OR Efficient Implementation
+To efficiently implement or code for neural network, one could either optimize the algorithms or (maybe and!) optimize the way the code is written. Notice the code reflectd before using x, w, and b, followed by dense function definition and use of sigmoid function, can be rewritten as follows:
+```python
+X = np.array([[]])
+W = np.array([[],[]])
+B = np.array([[]])
+#the lines above created 2D arrays.
+def dense(A_in,W, B):
+  Z=np.matmul(A_in,W)+b #matmul performs matrix multiplication function
+  A_out = g(Z)
+  return A_out
 ```
