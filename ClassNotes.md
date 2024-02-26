@@ -418,8 +418,8 @@ model = Sequential([layer_1,layer_2]) # This is asking TF to create a neural net
 This can also be achieved using the following line, rather than having explicit assignments:
 
 ```python
-model = Sequential([Dense(units = 3, activation "sigmoid"),
-                    Dense(units = 1, activation "sigmoid")])
+model = Sequential([Dense(units = 3, activation ="sigmoid"),
+                    Dense(units = 1, activation ="sigmoid")])
 model.compile(...)
 ```
 
