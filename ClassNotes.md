@@ -571,3 +571,46 @@ def dense(A_in,W, B):
   A_out = g(Z)
   return A_out
 ```
+
+## Course 2 Week 2:
+### Neural Net Training: TF implementation
+The typical example for this trainign is to train on a set of handwriten 0s and 1s. 
+Last week the following script was written to handle the 3 layer neural network (NN from now on). 
+```python
+import tensorflow as tf
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense
+model = Sequential([
+                    Dense(units=25, activation = 'sigmoid'),
+                    Dense(units=15, activation = 'sigmoid'),
+                    Dense(units=1, activation = 'sigmoid'),
+                    ])
+# to compile the model and find the loss function:
+from tensorflow.keras.losses import BinaryCrossentropy
+model.compile(loss=BinaryCrossentropy())
+# and now fit the model
+model.fit(X,Y,epochs = 100)
+```
+Here we want to initially establish the details behind the training of the model.
+
+Very similar to the logistic regression training, where we wanted to find the proper coefficients for the wx+b equation to estimate/predict the data trend, here we follow the same steps and then find the loss and the cost function for the training set. Lastly we tried to minimize the cost function. 
+
+Step 1: Specify how to compute the output for a given input: 
+```python
+model = Sequential ([Dense(...)], Dense(...),...,Dense(...))
+```
+Step 2: create the model and the loss function to use: 
+the equation for the binary cross entropy function isis:
+```math
+L(f(\vv{x}),y) = - y \log{f(\vv{x})} - (1-y)\log{(1-f(\vv{x}))}
+```
+```python
+model.compile(loss=BinaryCrossentropy()) 
+```
+Not that the Binary function is being used for a classification problem. If the problem was a regression problem, we could use Mean Squared Error function instead. 
+
+Step 3: Specify how to minimize the cost function: 
+```python
+model.fit(X,y, epochs = 100) # uses the gradient descent to compute the minimum value for w and b. 
+```
+
