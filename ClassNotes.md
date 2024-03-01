@@ -614,3 +614,8 @@ Step 3: Specify how to minimize the cost function:
 model.fit(X,y, epochs = 100) # uses the gradient descent to compute the minimum value for w and b. 
 ```
 
+### Neural Net Training: Activation Functions:
+
+So far all examples included using sigmoid function for the activation function. However, if we are doing some variation of categorization (e.g. multiple ways to categorize that shows in sruverys). One option is Rectified Linear Unit (ReLU). Another option is to just linear activation function. 
+The choice of the activation function is highly depends on what sort of output we are expecting. Example could be the case of being able to have negative output or not, where ReLU can play a clear role. 
+
