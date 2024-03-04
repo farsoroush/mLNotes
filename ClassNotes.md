@@ -680,5 +680,66 @@ model.compile(loss = SparseCategoricalCrossEntropy(from_logits=True) )
 
 # Train on Data to minimize J
 model.fit(X,Y,epoch = 100)
+
+#Predict
+logit = model(X)
+f_x = tf.nn.softmax(logit)
+```
+Note that the same idea regarding the numerical stability also applies to the Logistic Regression models too. 
+
+
+Here is a practical example:
+
+```python
+def my_softmax(z):
+    ez = np.exp(z)              #element-wise exponenial
+    sm = ez/np.sum(ez)
+    return(sm)
+# make  dataset for example
+centers = [[-5, 2], [-2, -2], [1, 2], [5, -2]]
+X_train, y_train = make_blobs(n_samples=2000, centers=centers, cluster_std=1.0,random_state=30)
+
+#Creating the model
+model = Sequential(
+    [ 
+        Dense(25, activation = 'relu'),
+        Dense(15, activation = 'relu'),
+        Dense(4, activation = 'softmax')    # < softmax activation here
+    ]
+)
+model.compile(
+    loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+    optimizer=tf.keras.optimizers.Adam(0.001),
+)
+
+model.fit(
+    X_train,y_train,
+    epochs=10
+)
+#Predict
+p_nonpreferred = model.predict(X_train)
+print(p_nonpreferred [:2])
+print("largest value", np.max(p_nonpreferred), "smallest value", np.min(p_nonpreferred))
 ```
 
+However, there is a preferred modeling way:
+
+```python
+preferred_model = Sequential(
+    [ 
+        Dense(25, activation = 'relu'),
+        Dense(15, activation = 'relu'),
+        Dense(4, activation = 'linear')   #<-- Note
+    ]
+)
+preferred_model.compile(
+    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),  #<-- Note
+    optimizer=tf.keras.optimizers.Adam(0.001),
+)
+
+preferred_model.fit(
+    X_train,y_train,
+    epochs=10
+)      
+```
+NOTE: The output predictions are not probabilities! If the desired output are probabilities, the output should be be processed by a softmax.
