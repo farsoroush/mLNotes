@@ -656,3 +656,29 @@ loss(a_1,a_2,...,a_N,y) = \left\{\begin{matrix} -log(a_1)  \text{    if    } y=1
 \\ -log(a_N)  \text{    if    } y=N
 \end{matrix}\right.
 ```
+#### Implementation of Softmax:
+Previously, for the handwritten classification, the archtecture of the Neural Net ended in 1 neuron last layer. In the softmax categorization, the last layer is changed to N neuron, depending on the number of categories, which is called the Softmax layer. Notice that a_i is a function of z_i and other z_j s that are i not equal j, unlike the previous categorization that a_i was only a function of z_i. 
+
+Here is how the code implementation would look like for Softmax:
+
+```python
+import tensorflow as tf
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense
+
+# Specify the model (f_w,b (x) =?)
+model = Sequential([
+        Dense(unit = 25, activation = 'relu',
+        Dense(unit = 15, activation = 'relu',
+        Dense(unit = 10, activation = 'linear', 
+])
+##Note: instead of linear in the last activation, we originally used "softmax," however, if we use linear and add "from_logits=True" in the complile section, TF will rearrange terms to form a more numerically accurate model. 
+# Specify loss and cost
+from tensorflow.keras.losses import SparseCategoricalCrossEntropy
+
+model.compile(loss = SparseCategoricalCrossEntropy(from_logits=True) )
+
+# Train on Data to minimize J
+model.fit(X,Y,epoch = 100)
+```
+
