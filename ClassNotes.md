@@ -619,3 +619,40 @@ model.fit(X,y, epochs = 100) # uses the gradient descent to compute the minimum 
 So far all examples included using sigmoid function for the activation function. However, if we are doing some variation of categorization (e.g. multiple ways to categorize that shows in sruverys). One option is Rectified Linear Unit (ReLU). Another option is to just linear activation function. 
 The choice of the activation function is highly depends on what sort of output we are expecting. Example could be the case of being able to have negative output or not, where ReLU can play a clear role. 
 
+### Multiclass Classification:
+The previous examples of detecting the 0 and 1 is the simplest form of categorization, meaning the algorithm needs to understand if the input is 0 or 1. Expanding the same example to detect all digits from 0 to 9, will open the field to new problems and requires new modalities to handle multiclass classification problem. 
+
+Recall that Logestic Regression is used for 2 possible output values and we used sigmoid function for calculating the possibility. **Softmax** Regression is the answer o multiple output possibilities. Here is an example for 4 output conditions:
+```math
+z_1 = \overrightarrow{w}_1 \cdot \overrightarrow{x}_1 + b_1
+
+z_2 = \overrightarrow{w}_2 \cdot \overrightarrow{x}_2 + b_2
+
+z_3 = \overrightarrow{w}_3 \cdot \overrightarrow{x}_3 + b_3
+
+z_4 = \overrightarrow{w}_4 \cdot \overrightarrow{x}_4 + b_4
+```
+
+And the Activations will be:
+```math
+a_1 = \frac{e^{z_1}}{e^{z_1}+e^{z_2}+e^{z_3}+e^{z_4}} = P(y=1|\overrightarrow{x})
+```
+and similarly a_2, a_3, and a_4 can be calculated. ** Remember that the sum of probabilities will stay 1 as usual. **
+
+As such the Softmax Regression for N possible outputs calculates using the following:
+``` math
+\displaylines{z_j = \overrightarrow{w}_j \cdot \overrightarrow{x}_j + b_j \text{     where    } j = 1,2,3,...,N
+\\
+and:
+\\
+a_j = \frac{e^{z_j}}{\Sigma_{k=1}^{N}{e^{z_k}} = P(y=j|\overrightarrow{x})}
+}
+```
+Now the cost function should be, similar to the logistic Regression:
+```math
+loss(a_1,a_2,...,a_N,y) = \left\{\begin{matrix} -log(a_1)  \text{    if    } y=1
+\\ -log(a_2)  \text{    if    } y=2
+\\ \vdots 
+\\ -log(a_N)  \text{    if    } y=N
+\end{matrix}\right.
+```
