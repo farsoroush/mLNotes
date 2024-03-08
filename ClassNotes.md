@@ -743,3 +743,23 @@ preferred_model.fit(
 )      
 ```
 NOTE: The output predictions are not probabilities! If the desired output are probabilities, the output should be be processed by a softmax.
+
+### Advanced optimization:
+Previously we reviewed the gradient descent for improving the model. Depending on the needs of the model, some times the approach needs to be modified and the rate of optimization needs to be adjusted. The procedure to do so is through, **Adam (Adaptive Movement estimation**.The algorithm uses different values for $\alpha$ for each $w_j$ to modifiy the rate at which optimization is happening and result in faster more accurate outcome. Belwo is how it is written as acode:
+
+```python
+model = Sequential([
+                    tf.keras.layers.Dense(units=25,activation='sigmoid',
+                    tf.keras.layers.Dense(units=15,activation='sigmoid',
+                    tf.keras.layers.Dense(units=10,activation='linear',
+                    ])
+model.compilte(optimization=tf.keras.optimizers.Adam(learning_rate=1e-3),
+                loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)) #initial learning rate of 1e-3
+
+model.fit(X,Y,epochs=100)
+```
+
+#### Convolutional Layer
+If each neuran instead of looking at one and only one specific neuron, they could look at a region, made up of multiple pixels, called convolution layer. This makes the creation of the model faster. 
+
+### Back Propagation
