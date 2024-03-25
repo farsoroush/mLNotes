@@ -762,4 +762,12 @@ model.fit(X,Y,epochs=100)
 #### Convolutional Layer
 If each neuran instead of looking at one and only one specific neuron, they could look at a region, made up of multiple pixels, called convolution layer. This makes the creation of the model faster. 
 
-### Back Propagation
+## Week 3: Debugging a Learning Algorithm
+The aim is to find out ways to carry on diagnostics to find out how we can improve the model or find the issues with the model. 
+
+1- Evaluating the model: this is the defaul break down of the training dataset into "Trainig" set and the "Test" set. 70-30 or 80-20 would be a typical split ratio. This way we can calculate the Error of the Test sample using the actual data. 
+As such, now we have two Error functions, $J_{test}$ and $J_{train}$ to evaluate our model. So, if $J_{test} >> J_{train}$ then we know that the model overfit on the training dataset and can be thrown off when faced with the test dataset.
+
+2- The other way is to measure the fraction of test and train that the algorithm mis-classified. 
+
+The next question is how to choose the model? how do one chooses the degree of the complexity of the model? That is where we use **Cross Validation** where we split the dataset to three datasets: Training (~60%), cross validation or CV set or development set or dev set (~20%), and test (~20%). 
