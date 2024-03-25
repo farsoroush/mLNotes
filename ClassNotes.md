@@ -771,3 +771,135 @@ As such, now we have two Error functions, $J_{test}$ and $J_{train}$ to evaluate
 2- The other way is to measure the fraction of test and train that the algorithm mis-classified. 
 
 The next question is how to choose the model? how do one chooses the degree of the complexity of the model? That is where we use **Cross Validation** where we split the dataset to three datasets: Training (~60%), cross validation or CV set or development set or dev set (~20%), and test (~20%). 
+
+Scikit-learn provides a [`train_test_split`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html) function to split your data into the parts mentioned above. In the code cell below, you will split the entire dataset into 60% training, 20% cross validation, and 20% test.
+
+Side Note:
+#### Feature scaling
+
+In the previous course of this specialization, you saw that it is usually a good idea to perform feature scaling to help your model converge faster. This is especially true if your input features have widely different ranges of values. Later in this lab, you will be adding polynomial terms so your input features will indeed have different ranges. For example, $x$ runs from around 1600 to 3600, while $x^2$ will run from 2.56 million to 12.96 million. 
+
+You will only use $x$ for this first model but it's good to practice feature scaling now so you can apply it later. For that, you will use the [`StandardScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) class from scikit-learn. This computes the z-score of your inputs. As a refresher, the z-score is given by the equation:
+
+$$ z = \frac{x - \mu}{\sigma} $$
+
+where $\mu$ is the mean of the feature values and $\sigma$ is the standard deviation. The code below shows how to prepare the training set using the said class. You can plot the results again to inspect if it still follows the same pattern as before. The new graph should have a reduced range of values for `x`.
+
+To evaluate the performance of your model, you will measure the error for the training and cross validation sets. For the training error, recall the equation for calculating the mean squared error (MSE):
+
+$$J_{train}(\vec{w}, b) = \frac{1}{2m_{train}}\left[\sum_{i=1}^{m_{train}}(f_{\vec{w},b}(\vec{x}_{train}^{(i)}) - y_{train}^{(i)})^2\right]$$
+
+Scikit-learn also has a built-in [`mean_squared_error()`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_squared_error.html) function that you can use. Take note though that [as per the documentation](https://scikit-learn.org/stable/modules/model_evaluation.html#mean-squared-error), scikit-learn's implementation only divides by `m` and not `2*m`, where `m` is the number of examples. As mentioned in Course 1 of this Specialization (cost function lectures), dividing by `2m` is a convention we will follow but the calculations should still work whether or not you include it. Thus, to match the equation above, you can use the scikit-learn function then divide by 2 as shown below. We also included a for-loop implementation so you can check that it's equal. 
+
+Another thing to take note: Since you trained the model on scaled values (i.e. using the z-score), you should also feed in the scaled training set instead of its raw values.
+
+You will scale the cross validation set below by using the same `StandardScaler` you used earlier but only calling its [`transform()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.transform) method instead of [`fit_transform()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.fit_transform).
+
+First, you will generate the polynomial features from your training set. The code below demonstrates how to do this using the [`PolynomialFeatures`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html) class. It will create a new input feature which has the squared values of the input `x` (i.e. degree=2).
+
+Here is an example of running the models and debugging:
+
+```python
+ for array computations and loading data
+import numpy as np
+
+# for building linear regression models and preparing data
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler, PolynomialFeatures
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+
+# for building and training neural networks
+import tensorflow as tf
+
+# custom functions
+import utils
+
+#Regression model building:
+# Load the dataset from the text file
+data = np.loadtxt('./data/data_w3_ex1.csv', delimiter=',')
+
+# Split the inputs and outputs into separate arrays
+x = data[:,0]
+y = data[:,1]
+
+# Convert 1-D arrays into 2-D because the commands later will require it
+x = np.expand_dims(x, axis=1)
+y = np.expand_dims(y, axis=1)
+
+print(f"the shape of the inputs x is: {x.shape}")
+print(f"the shape of the targets y is: {y.shape}")
+
+# Initialize the class
+scaler_linear = StandardScaler()
+
+# Compute the mean and standard deviation of the training set then transform it
+X_train_scaled = scaler_linear.fit_transform(x_train)
+
+print(f"Computed mean of the training set: {scaler_linear.mean_.squeeze():.2f}")
+print(f"Computed standard deviation of the training set: {scaler_linear.scale_.squeeze():.2f}")
+
+# Initialize the class
+linear_model = LinearRegression()
+
+# Train the model
+linear_model.fit(X_train_scaled, y_train )
+# Feed the scaled training set and get the predictions
+yhat = linear_model.predict(X_train_scaled)
+
+# Use scikit-learn's utility function and divide by 2
+print(f"training MSE (using sklearn function): {mean_squared_error(y_train, yhat) / 2}")
+
+# for-loop implementation
+total_squared_error = 0
+
+for i in range(len(yhat)):
+    squared_error_i  = (yhat[i] - y_train[i])**2
+    total_squared_error += squared_error_i                                              
+
+mse = total_squared_error / (2*len(yhat))
+
+print(f"training MSE (for-loop implementation): {mse.squeeze()}")
+
+# Scale the cross validation set using the mean and standard deviation of the training set
+X_cv_scaled = scaler_linear.transform(x_cv)
+
+print(f"Mean used to scale the CV set: {scaler_linear.mean_.squeeze():.2f}")
+print(f"Standard deviation used to scale the CV set: {scaler_linear.scale_.squeeze():.2f}")
+
+# Feed the scaled cross validation set
+yhat = linear_model.predict(X_cv_scaled)
+
+# Use scikit-learn's utility function and divide by 2
+print(f"Cross validation MSE: {mean_squared_error(y_cv, yhat) / 2}")
+
+# Instantiate the class
+scaler_poly = StandardScaler()
+
+# Compute the mean and standard deviation of the training set then transform it
+X_train_mapped_scaled = scaler_poly.fit_transform(X_train_mapped)
+
+# Preview the first 5 elements of the scaled training set.
+print(X_train_mapped_scaled[:5])
+
+# Initialize the class
+model = LinearRegression()
+
+# Train the model
+model.fit(X_train_mapped_scaled, y_train )
+
+# Compute the training MSE
+yhat = model.predict(X_train_mapped_scaled)
+print(f"Training MSE: {mean_squared_error(y_train, yhat) / 2}")
+
+# Add the polynomial features to the cross validation set
+X_cv_mapped = poly.transform(x_cv)
+
+# Scale the cross validation set using the mean and standard deviation of the training set
+X_cv_mapped_scaled = scaler_poly.transform(X_cv_mapped)
+
+# Compute the cross validation MSE
+yhat = model.predict(X_cv_mapped_scaled)
+print(f"Cross validation MSE: {mean_squared_error(y_cv, yhat) / 2}")
+
+```
