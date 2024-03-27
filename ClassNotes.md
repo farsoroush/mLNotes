@@ -905,3 +905,8 @@ yhat = model.predict(X_cv_mapped_scaled)
 print(f"Cross validation MSE: {mean_squared_error(y_cv, yhat) / 2}")
 
 ```
+
+### High Variance vs High Bias?
+The problem of finding which one is the source will help finding out a better strategy to resolve the issue. Higher Bias means that the model is not properly capturing the features of the dataset and need to implement more complexities (higher orders or more date). On the other hand High Variance means that the model is capturing significantly more than needed details and to resolve the issue we can reduce the size of sample set or reduce higher order terms from the model making the model simpler. 
+
+
