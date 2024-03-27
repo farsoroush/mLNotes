@@ -916,4 +916,10 @@ However, if you train your large neural network, you must be aware that they are
 ![Large Neural Networks Bias](https://github.com/farsoroush/mLNotes/blob/897c9fde0d83850173c2ba1f6de6aaa656a93fdb/LNN%20models%20bias.png)
 
 
+## Machine Learning Model Development:
+1- Choose Architecture: model, data, etc.
+2- Train model
+3- Diagnostics
+4- repeat!
 
+### Error Analysis:
