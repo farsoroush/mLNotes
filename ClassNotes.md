@@ -909,4 +909,11 @@ print(f"Cross validation MSE: {mean_squared_error(y_cv, yhat) / 2}")
 ### High Variance vs High Bias?
 The problem of finding which one is the source will help finding out a better strategy to resolve the issue. Higher Bias means that the model is not properly capturing the features of the dataset and need to implement more complexities (higher orders or more date). On the other hand High Variance means that the model is capturing significantly more than needed details and to resolve the issue we can reduce the size of sample set or reduce higher order terms from the model making the model simpler. 
 
+![Andrew Ng's slide on Bias and Variance](https://github.com/farsoroush/mLNotes/blob/aede484acfe92cf37731299164977977992d39aa/Bias%20vs%20Variance_MLNotes.png)
+
+However, if you train your large neural network, you must be aware that they are **low bias machines"". 
+
+![Large Neural Networks Bias](https://github.com/farsoroush/mLNotes/blob/897c9fde0d83850173c2ba1f6de6aaa656a93fdb/LNN%20models%20bias.png)
+
+
 
