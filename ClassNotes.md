@@ -936,4 +936,10 @@ Data-centric approach where the training dataset is transformed and engineered t
 Transfering the w and b matrix from an initially trained model (on a large dataset) to a new model or when adding new applications. Similar to GPT model, where it was trained on a significantly large dataset and then fine tuned with a smalled traing set. 
 
 ### Full cycle of ML modeling:
+Model development cycle:
 
+![Model development cycle](https://github.com/farsoroush/mLNotes/blob/1076f42d4ef088d24a250099646ea6d017a1b5c6/Full%20cycle%20of%20ML%20Deployment.png)
+
+
+Model Deployment:
+![Model Deployment](https://github.com/farsoroush/mLNotes/blob/1076f42d4ef088d24a250099646ea6d017a1b5c6/Deployment%20system.png)
