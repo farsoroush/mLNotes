@@ -923,3 +923,14 @@ However, if you train your large neural network, you must be aware that they are
 4- repeat!
 
 ### Error Analysis:
+Error analysis is essentially going through the errors made when the training dataset was used to train the model and the outcome was not properly categorized. 
+Some times after analyzing the data, we find out the error is coming from the way the model comprehended the data and maybe categorized it. As a result, we may find the need to add more data. One of the solutions is **Data Augmentation** which is essentially taking the same dataset, and then modify or change the same set and create new examples. Simple examples for training an OCR algorithm would be: rotating, enlarging, changing the intensity of images, warp/distort the images, or flipping the images; still same data is used. 
+
+Another example is data synthesis, which is creating a new dataset and essentially you would write a code to create the training the algorithm. This is more like a data engineering. 
+
+Distinction: 
+model-centric approach where the focus is more on improving the model and introduce new datasets. 
+Data-centric approach where the training dataset is transformed and engineered to create larger training sets. 
+
+### Transfer Learning:
+
