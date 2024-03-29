@@ -933,4 +933,7 @@ model-centric approach where the focus is more on improving the model and introd
 Data-centric approach where the training dataset is transformed and engineered to create larger training sets. 
 
 ### Transfer Learning:
+Transfering the w and b matrix from an initially trained model (on a large dataset) to a new model or when adding new applications. Similar to GPT model, where it was trained on a significantly large dataset and then fine tuned with a smalled traing set. 
+
+### Full cycle of ML modeling:
 
